@@ -1,0 +1,353 @@
+
+(define (maak-adt-level aantal-cellen-breedte aantal-cellen-hoogte)
+  (let*  ;ik maak start positie aan de hand van positie adt
+         
+      ((schorpioen-adt (maak-schorpioen-adt schorpioen-start-positie1))
+       (schorpioen-adt2 (maak-schorpioen-adt schorpioen-start-positie2))
+       (schorpioen-adt-level2 (maak-schorpioen-adt schorpioen-start-positie1-level2))
+       (schorpioen-adt2-level2 (maak-schorpioen-adt schorpioen-start-positie2-level2))
+       (schorpioen-adt-level3 (maak-schorpioen-adt schorpioen-start-positie1-level3))
+       (schorpioen-adt2-level3 (maak-schorpioen-adt schorpioen-start-positie2-level3))
+       (schorpioen-positie (schorpioen-adt 'positie))
+       (schorpioen-positie2 (schorpioen-adt2 'positie))
+       (schorpioen-positie-level2 (schorpioen-adt-level2 'positie))
+       (schorpioen-positie2-level2 (schorpioen-adt2-level2 'positie))
+       (schorpioen-positie-level3 (schorpioen-adt-level3 'positie))
+       (schorpioen-positie2-level3 (schorpioen-adt2-level3 'positie))
+       
+       
+       (voedsels (posities-objecten lijst-voedsel-level))
+       (voedsels2 (posities-objecten lijst-voedsel2-level))
+       (powerup-posities (posities-objecten-zonder-spelhoogte-en-breedte lijst-powerup))
+       (powerups (adt-aanmaak powerup-posities  maak-op-te-rapen-objecten-adt))
+       (voedsel-level2 (posities-objecten lijst-voedsel-level2))
+       (voedsel-level3 (posities-objecten lijst-voedsel-level3))
+       (voedsel2-level2 (posities-objecten lijst-voedsel2-level2))
+       (voedsel2-level3 (posities-objecten lijst-voedsel2-level3))
+       (surfplank (posities-objecten lijst-surfplank-level))
+       (sleutel (posities-objecten lijst-sleutels))
+       (sleutels3 (posities-objecten lijst-sleutels-level3)) 
+       (voedsel-adt2-sleutels (adt-aanmaak sleutel maak-op-te-rapen-objecten-adt))
+       (voedsel-adt2 (adt-aanmaak voedsel-level2 maak-op-te-rapen-objecten-adt))
+       (voedsel-adt3 (adt-aanmaak voedsel-level3 maak-op-te-rapen-objecten-adt))
+       (voedsel2-adt2 (adt-aanmaak voedsel2-level2 maak-op-te-rapen-objecten-adt))
+       (voedsel2-adt3 (adt-aanmaak voedsel2-level3 maak-op-te-rapen-objecten-adt))
+       (voedsel-adt3-sleutels (adt-aanmaak sleutels3 maak-op-te-rapen-objecten-adt))
+       (voedsel-adt (adt-aanmaak voedsels maak-op-te-rapen-objecten-adt))
+       (voedsel2-adt (adt-aanmaak voedsels2 maak-op-te-rapen-objecten-adt))
+       (voedsel-adt-surfplank  (adt-aanmaak surfplank maak-op-te-rapen-objecten-adt))
+  
+       (vuurmier-adt (maak-vuurmier-adt vuurmier-start-positie))
+       (vuurmier-tijd 0)
+       (schorpioen-tijd 0)
+       (voedsel-tijd 0)
+       (score 0)
+       (hoogste-score 0)
+       (levens 100))
+       
+
+    
+       
+
+
+    (define (vuurmier-eet-appel)
+      (let ((vuurmier-positie (vuurmier-adt 'positie)))
+        (set! voedsel-adt (map (lambda (xy-coordinaat) (if xy-coordinaat (if (not (and (= ((xy-coordinaat 'positie) 'x) (vuurmier-positie 'x))
+                                                   (= ((xy-coordinaat 'positie) 'y) (vuurmier-positie 'y)))) xy-coordinaat
+                                                                                                             #f) #f)) voedsel-adt))
+        voedsel-adt))
+    
+    (define (vuurmier-eet-gouden-appel)
+      (let ((vuurmier-positie (vuurmier-adt 'positie)))
+        (set! voedsel2-adt (map (lambda (xy-coordinaat) (if xy-coordinaat (if (not (and (= ((xy-coordinaat 'positie) 'x) (vuurmier-positie 'x))
+                                                   (= ((xy-coordinaat 'positie) 'y) (vuurmier-positie 'y)))) xy-coordinaat
+                                                                                                             #f) #f)) voedsel2-adt))
+        voedsel2-adt))
+
+    (define (verander-score-op-scherm x voedsel-adt)
+      
+    (let  
+             ((vuurmier-positie (vuurmier-adt 'positie)))
+              
+              
+     (for-each (lambda (xy-coordinaat) (if xy-coordinaat (if  (and (= ((xy-coordinaat 'positie) 'x) (vuurmier-positie 'x)) (= ((xy-coordinaat 'positie) 'y) (vuurmier-positie 'y)))
+            (set! score (+ score x))))) voedsel-adt)))
+
+     (define (verander-levens-powerup x powerups)
+      
+    (let  
+             ((vuurmier-positie (vuurmier-adt 'positie)))
+              
+              
+     (for-each (lambda (xy-coordinaat) (if xy-coordinaat (if  (and (= ((xy-coordinaat 'positie) 'x) (vuurmier-positie 'x)) (= ((xy-coordinaat 'positie) 'y) (vuurmier-positie 'y)))
+            (set! levens (+ levens x))))) powerups)))
+
+    
+  (define (verander-hoogste-score-op-scherm )
+
+    (if
+     (> score hoogste-score)
+     (set! hoogste-score score)))
+    
+      
+   
+
+
+    
+      (define (vuurmier-eet-appel-level2)
+      (let ((vuurmier-positie (vuurmier-adt 'positie)))
+        (set! voedsel-adt2 (map (lambda (xy-coordinaat) (if xy-coordinaat (if (not (and (= ((xy-coordinaat 'positie) 'x) (vuurmier-positie 'x))
+                                                   (= ((xy-coordinaat 'positie) 'y) (vuurmier-positie 'y)))) xy-coordinaat
+                                                                                                             #f) #f)) voedsel-adt2))
+        voedsel-adt2))
+        
+    (define (vuurmier-eet-gouden-appel-level2)
+      (let ((vuurmier-positie (vuurmier-adt 'positie)))
+        (set! voedsel2-adt2 (map (lambda (xy-coordinaat) (if xy-coordinaat (if (not (and (= ((xy-coordinaat 'positie) 'x) (vuurmier-positie 'x))
+                                                   (= ((xy-coordinaat 'positie) 'y) (vuurmier-positie 'y)))) xy-coordinaat
+                                                                                                             #f) #f)) voedsel2-adt2))
+        voedsel2-adt2))
+    
+    (define (vuurmier-eet-appel-level3)
+      (let ((vuurmier-positie (vuurmier-adt 'positie)))
+        (set! voedsel-adt3 (map (lambda (xy-coordinaat) (if xy-coordinaat (if (not (and (= ((xy-coordinaat 'positie) 'x) (vuurmier-positie 'x))
+                                                   (= ((xy-coordinaat 'positie) 'y) (vuurmier-positie 'y)))) xy-coordinaat
+                                                                                                             #f) #f)) voedsel-adt3))
+        voedsel-adt3))
+
+        
+    (define (vuurmier-eet-gouden-appel-level3)
+      (let ((vuurmier-positie (vuurmier-adt 'positie)))
+        (set! voedsel2-adt3 (map (lambda (xy-coordinaat) (if xy-coordinaat (if (not (and (= ((xy-coordinaat 'positie) 'x) (vuurmier-positie 'x))
+                                                   (= ((xy-coordinaat 'positie) 'y) (vuurmier-positie 'y)))) xy-coordinaat
+                                                                                                             #f) #f)) voedsel2-adt3))
+        voedsel2-adt3))
+    
+(define (vuurmier-neemt-surfplank)
+      (let ((vuurmier-positie (vuurmier-adt 'positie)))
+        (set! voedsel-adt-surfplank (map (lambda (xy-coordinaat) (if xy-coordinaat (if (not (and (= ((xy-coordinaat 'positie) 'x) (vuurmier-positie 'x))
+                                                   (= ((xy-coordinaat 'positie) 'y) (vuurmier-positie 'y)))) xy-coordinaat
+                                                                                                             #f) #f)) voedsel-adt-surfplank))
+        voedsel-adt-surfplank))
+    (define (vuurmier-neemt-powerup1)
+      (let ((vuurmier-positie (vuurmier-adt 'positie)))
+        (set! powerups (map (lambda (xy-coordinaat) (if xy-coordinaat (if (not (and (= ((xy-coordinaat 'positie) 'x) (vuurmier-positie 'x))
+                                                   (= ((xy-coordinaat 'positie) 'y) (vuurmier-positie 'y)))) xy-coordinaat
+                                                                                                             #f) #f)) powerups))
+        powerups))
+(define (vuurmier-neemt-sleutel2)
+      (let ((vuurmier-positie (vuurmier-adt 'positie)))
+        (set! voedsel-adt2-sleutels (map (lambda (xy-coordinaat) (if xy-coordinaat (if (not (and (= ((xy-coordinaat 'positie) 'x) (vuurmier-positie 'x))
+                                                   (= ((xy-coordinaat 'positie) 'y) (vuurmier-positie 'y)))) xy-coordinaat
+                                                                                                             #f) #f)) voedsel-adt2-sleutels))
+        voedsel-adt2-sleutels))
+
+    (define (vuurmier-neemt-sleutel3)
+      (let ((vuurmier-positie (vuurmier-adt 'positie)))
+        (set! voedsel-adt3-sleutels (map (lambda (xy-coordinaat) (if xy-coordinaat (if (not (and (= ((xy-coordinaat 'positie) 'x) (vuurmier-positie 'x))
+                                                   (= ((xy-coordinaat 'positie) 'y) (vuurmier-positie 'y)))) xy-coordinaat
+                                                                                                             #f) #f)) voedsel-adt3-sleutels))
+        voedsel-adt3-sleutels))
+  
+ (define (neemt-vuurmier-surfplank! vuurmier-adt)
+   (let ((vuurmier-positie (vuurmier-adt 'positie)))
+   ((vuurmier-adt 'vuurmier-heeft-surfplank) vuurmier-positie)))
+
+
+    
+    (define current-level 1)          
+                           
+    (define (beweeg-schorpioen!)
+      (if (> schorpioen-tijd schorpioen-snelheid)
+          (begin
+            (schorpioen-adt 'beweeg!)
+            (set! schorpioen-tijd 0))))
+
+    (define (richting-verandering richting)
+      (cond
+        ((eq? richting 'links) 'rechts)
+        ((eq? richting 'recht ) 'links)))
+
+    (define (schorpioen-pad1 positie-schorpioen schorpioen-adt schorpioen-start-positie schorpioen-eind-positie)
+      (cond 
+        ((= (positie-schorpioen 'x)(schorpioen-start-positie 'x))((schorpioen-adt 'richting) 'rechts)((schorpioen-adt 'schorpioen-beweegt!) 'rechts))
+        ((= (positie-schorpioen 'x)(schorpioen-eind-positie 'x))  ((schorpioen-adt 'richting) 'links)  ((schorpioen-adt 'schorpioen-beweegt!) 'links))
+        (else ((schorpioen-adt 'schorpioen-beweegt!)((schorpioen-adt 'richting-geven))))))
+
+    (define (schorpioen-random-pad schorpioen-adt2)
+      ((schorpioen-adt2 'schorpioen-beweegt!)    ((schorpioen-adt2 'schorpioen-random-richting) (random 4))))
+       
+      
+      
+      
+      
+        
+    
+    (define (draai-vuurmier! toets)
+      (cond
+        ((eq? toets 'right)
+         ((vuurmier-adt 'vuurmier-beweegt!) 'rechts))
+        ((eq? toets #\space) (display ((vuurmier-adt 'positie) 'x)))
+        ((eq? toets 'left)
+         ((vuurmier-adt 'vuurmier-beweegt!) 'links))
+        ((eq? toets 'up)
+         ((vuurmier-adt 'vuurmier-beweegt!) 'omhoog))
+        ((eq? toets 'down)
+         ((vuurmier-adt 'vuurmier-beweegt!) 'omlaag))))
+
+    (define (update! delta-tijd)
+      (cond
+        ((= current-level 1)
+         (neemt-vuurmier-surfplank! vuurmier-adt)
+        (verander-score-op-scherm appel-score voedsel-adt)
+        (verander-score-op-scherm goud-appel-score voedsel2-adt)
+        (verander-hoogste-score-op-scherm )
+        
+      (vuurmier-eet-appel)
+      (vuurmier-eet-gouden-appel)
+      (level-change)
+      (vergelijk)
+      (vuurmier-raakt-schorpioen)
+      (vuurmier-neemt-surfplank)
+      (schorpioen-pad1 (schorpioen-adt 'positie) schorpioen-adt schorpioen-start-positie1 schorpioen-eind-positie1)
+       (schorpioen-random-pad schorpioen-adt2)
+      (set! schorpioen-tijd (+ schorpioen-tijd delta-tijd))
+      (beweeg-schorpioen!))
+        ((= current-level 2)
+         (neemt-vuurmier-surfplank! vuurmier-adt)
+ 
+         
+          (verander-score-op-scherm appel-score voedsel-adt2)
+      (verander-score-op-scherm goud-appel-score voedsel2-adt2)
+      (verander-hoogste-score-op-scherm )
+        (verander-levens-powerup levens-extra powerups)
+         (vuurmier-neemt-powerup1)
+      (vuurmier-eet-appel-level2)
+      (vuurmier-eet-gouden-appel-level2)
+      (vuurmier-neemt-sleutel2)
+      (level-change)
+      (vergelijk)
+      (vuurmier-raakt-schorpioen)
+      (schorpioen-pad1 (schorpioen-adt-level2 'positie) schorpioen-adt-level2 schorpioen-start-positie1-level2 schorpioen-eind-positie1-level2)
+       (schorpioen-random-pad  schorpioen-adt2-level2)
+      (set! schorpioen-tijd (+ schorpioen-tijd delta-tijd))
+     
+      
+      (beweeg-schorpioen!))
+        ((= current-level 3)
+         (neemt-vuurmier-surfplank! vuurmier-adt)
+         (verander-score-op-scherm appel-score voedsel-adt3)
+      (verander-score-op-scherm goud-appel-score voedsel2-adt3)
+      (verander-hoogste-score-op-scherm )
+      (vuurmier-neemt-sleutel3)
+            
+      (vuurmier-eet-appel-level3)
+      (vuurmier-eet-gouden-appel-level3)
+      (level-change)
+      (vergelijk)
+      (vuurmier-raakt-schorpioen)
+     
+      (schorpioen-pad1 (schorpioen-adt-level3 'positie) schorpioen-adt-level3 schorpioen-start-positie1-level3 schorpioen-eind-positie1-level3)
+       (schorpioen-random-pad  schorpioen-adt2-level3)
+      (set! schorpioen-tijd (+ schorpioen-tijd delta-tijd))
+      (beweeg-schorpioen!))))
+        
+        
+     
+   
+    (define (toets! toets)
+      (draai-vuurmier!  toets))
+
+   ; (define (restart)
+     ; (cond
+       ; ((and (
+
+    
+    (define (vuurmier-raakt-schorpioen)
+      (if (vergelijk)
+          ((vuurmier-adt 'positie!) vuurmier-start-positie)))
+
+
+      
+    (define (vergelijk)
+      (let ((vuurmier-positie (vuurmier-adt 'positie))
+            (schorpioen-positie (schorpioen-adt 'positie))
+       (schorpioen-positie2 (schorpioen-adt2 'positie))
+       (schorpioen-positie-level2 (schorpioen-adt-level2 'positie))
+       (schorpioen-positie2-level2 (schorpioen-adt2-level2 'positie))
+       (schorpioen-positie-level3 (schorpioen-adt-level3 'positie))
+       (schorpioen-positie2-level3 (schorpioen-adt2-level3 'positie)))
+          
+          
+        (cond
+          ((= huidig-level 1)
+        (or (and (= (vuurmier-positie 'x)(schorpioen-positie 'x)) (= (vuurmier-positie 'y)(schorpioen-positie 'y)))
+            (and (= (vuurmier-positie 'x)(schorpioen-positie2 'x)) (= (vuurmier-positie 'y)(schorpioen-positie2 'y)))))
+          ((= huidig-level 2)  
+           (or  (and (= (vuurmier-positie 'x)(schorpioen-positie-level2 'x)) (= (vuurmier-positie 'y)(schorpioen-positie-level2 'y)))
+                (and (= (vuurmier-positie 'x)(schorpioen-positie2-level2 'x)) (= (vuurmier-positie 'y)(schorpioen-positie2-level2 'y)))))
+         ((= huidig-level 3)      
+          (or  (and (= (vuurmier-positie 'x)(schorpioen-positie-level3 'x)) (= (vuurmier-positie 'y)(schorpioen-positie-level3 'y)))
+               (and (= (vuurmier-positie 'x)(schorpioen-positie2-level3 'x)) (= (vuurmier-positie 'y)(schorpioen-positie2-level3 'y))))))))
+            
+            
+
+
+   
+
+
+  (define (level-change)
+    (let ((vuurmier-positie (vuurmier-adt 'positie)))
+    (if
+        (and (or (= (vuurmier-positie 'x) 2)  (= (vuurmier-positie 'x) 1))   (= (vuurmier-positie 'y) 16))
+        (cond ((= current-level 1)
+            (set! current-level 2)
+            ((vuurmier-adt 'positie!) vuurmier-start-positie))
+           ((= current-level 2)
+            (set! current-level 3)
+            ((vuurmier-adt 'positie!) vuurmier-start-positie))
+           ((= current-level 3)
+            (set! current-level 4))))))
+           
+            
+                                                     
+                                                              
+    (define (dispatch-level msg)
+      (cond
+        ((eq? msg 'update!) update!)
+        ((eq? msg 'toets!) toets!)
+        ((eq? msg 'vuurmier) vuurmier-adt)
+        ((eq? msg 'vuurmier-start-positie) vuurmier-start-positie)
+        ((eq? msg 'schorpioen) schorpioen-adt)
+        ((eq? msg 'schorpioen2) schorpioen-adt2)
+        ((eq? msg 'schorpioen-level2) schorpioen-adt-level2)
+        ((eq? msg 'schorpioen2-level2) schorpioen-adt2-level2)
+        ((eq? msg 'schorpioen-level3) schorpioen-adt-level3)
+        ((eq? msg 'schorpioen2-level3) schorpioen-adt2-level3)
+        ((eq? msg 'schorpioen-start-positie1) schorpioen-start-positie1)
+        ((eq? msg 'vergelijk) vergelijk)
+        ((eq? msg 'vuurmier-raakt-schorpioen) vuurmier-raakt-schorpioen)
+        ((eq? msg 'voedsel-adt) voedsel-adt)
+        ((eq? msg 'voedsel-adt2) voedsel-adt2)
+        ((eq? msg 'voedsel-adt3) voedsel-adt3)
+         ((eq? msg 'voedsel2-adt) voedsel2-adt)
+        ((eq? msg 'voedsel2-adt2) voedsel2-adt2)
+        ((eq? msg 'voedsel2-adt3) voedsel2-adt3)
+        ((eq? msg 'powerups) powerups)
+        
+        ((eq? msg 'surfplank) voedsel-adt-surfplank)
+        ((eq? msg 'sleutel) voedsel-adt2-sleutels)
+        ((eq? msg 'sleutels-level3) voedsel-adt3-sleutels)
+
+        ((eq? msg 'score) score)
+         ((eq? msg 'hoogste-score) hoogste-score)
+         ((eq? msg 'levens) levens)
+        ((eq? msg 'current-level) current-level)))
+      
+    dispatch-level))
+
+
+
+   
+         
+

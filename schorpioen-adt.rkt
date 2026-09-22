@@ -1,0 +1,48 @@
+
+(define (maak-schorpioen-adt positie-schorpioen)
+  (let   ((Doolhof-adt (maak-doolhof-adt))
+        
+      
+        (richting 'rechts));ik geef hierbij al een waarde aan de richting, de schorpioen zal dus beginnen met naar rechts te bewegen, ik heb hiervoor inspiratie gehaald uit de implementatie van snake tijdens wpo massaprogrammeren
+(define (richting-geven)
+  richting)
+   
+    (define (set-richting! r)
+      (set! richting r))      ; dit is een procedure die nuttig is als ik de richting wil veranderen van een schorpioen die zelf beweegt in één richting zonder te stoppen
+   
+  (define (positie! nieuwe-positie)
+    (set! positie nieuwe-positie))
+     
+   (define (schorpioen-beweegt! richting)
+     
+      (let((new-position ((Doolhof-adt 'beweegt-zonder-puzzel) richting positie-schorpioen huidig-level))) ; herinner, beweegt! geeft een nieuwe positie terug, die nieuwe positie moet de nieuwe positie van de vuurmier worden
+        (set! positie-schorpioen new-position)))
+        
+
+    (define (schorpioen-random-richting random-getal)
+      (cond ((equal? random-getal 0) 'omlaag) 
+            ((equal? random-getal 1) 'links)
+            ((equal? random-getal 2) 'omhoog)
+            ((equal? random-getal 3) 'rechts)))
+    
+    
+   
+  (define (dispatch m)
+    (cond
+      ((eq? m 'positie) positie-schorpioen)
+    
+      ((eq? m 'positie!) positie!)
+      ((eq? m 'schorpioen-beweegt!) schorpioen-beweegt!)
+      ((eq? m 'richting) set-richting!)
+      ((eq? m 'richting-geven) richting-geven)
+      ((eq? m 'schorpioen-random-richting) schorpioen-random-richting)))
+
+      
+      
+  dispatch))
+      
+      
+
+
+
+

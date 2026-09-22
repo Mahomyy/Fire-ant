@@ -1,0 +1,73 @@
+
+(define (maak-vuurmier-adt positie-vuurmier)
+  (let
+      ((Doolhof-adt (maak-doolhof-adt))
+         
+       (positie-vuurmier vuurmier-start-positie)) ;start-positie-vuurmier is gedefinieerd in Constanten.rkt
+        
+     
+  
+    (define (positie! nieuwe-positie)
+      (set! positie-vuurmier nieuwe-positie))
+
+
+    (define positie-soort2 (cons 1 1))
+    
+    (define (vuurmier-heeft-puzzel positie-vuurmier)
+      (cond
+        ((= huidig-level 1)
+         (if (and (= (positie-vuurmier 'x) (quotient 32 7)) (= (positie-vuurmier 'y) (quotient 20 3)))
+             (set! positie-soort2 (cons 7 3))))
+        ((= huidig-level 2)
+         (if (and (= (positie-vuurmier 'x) (quotient 32 8)) (= (positie-vuurmier 'y) (quotient 20 4)))
+             (set! positie-soort2 (cons 8 4))))
+        ((= huidig-level 3)
+
+         (cond  ((and (= (positie-vuurmier 'x) (quotient 32 8)) (= (positie-vuurmier 'y) (quotient 20 4)))
+                      (set! positie-soort2 (cons 5 4)))
+                ((and (= (positie-vuurmier 'x) (quotient 32 4)) (= (positie-vuurmier 'y) (quotient 20 4)))
+                 (if (= (car positie-soort2) 5)
+                      (set! positie-soort2 (cons 4 4))
+      
+      
+            
+                       ))))))
+            
+                 
+
+
+
+   
+
+   
+    
+    ; kijk eerst naar aanpassingen in vuurmier-adt
+    (define (vuurmier-beweegt! richting)
+      (let((new-position ((Doolhof-adt 'beweegt!) richting positie-vuurmier positie-soort2 huidig-level)))    ; ik gebruik beweegt! uit doolhof-adt zodat de vuurmier niet op de muren gaat, maar gwn de gang volgt
+          
+        
+        
+           (set! positie-vuurmier new-position)))
+        
+        
+    
+
+    
+    (define (dispatch m)
+      (cond
+        ((eq? m 'positie) positie-vuurmier)
+        ((eq? m 'positie!) positie!)
+        ((eq? m 'vuurmier-beweegt!) vuurmier-beweegt!)
+        ((eq? m 'vuurmier-heeft-surfplank) vuurmier-heeft-puzzel)))
+      
+    dispatch))
+      
+      
+
+;ik begin eerst met een positie die ik geef aan de vuurmier
+;de vuurmier-beweegt! procedure is nodig om de positie van de vuurmier te veranderen, hierbij maak ik gebruik van de doolhof-adt
+      
+
+
+
+

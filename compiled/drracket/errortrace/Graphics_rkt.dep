@@ -1,0 +1,1 @@
+("8.6" tarm64osx ("9efa8f567c5f2152fc58e30f4caad182e72286ca" . "e518980b2c58b96e3a25a15078e0db1e9530f6cd") (collects #"compatibility" #"mlist.rkt") (collects #"errortrace" #"errortrace-key.rkt") (collects #"racket" #"gui" #"base.rkt") (collects #"racket" #"main.rkt") (collects #"racket" #"runtime-config.rkt") (collects #"racket" #"string.rkt") (collects #"wxme" #"read.rkt"))

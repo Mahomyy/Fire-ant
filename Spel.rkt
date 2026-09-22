@@ -1,0 +1,22 @@
+(#%require (only racket random))
+(#%require (only racket/base random))
+(#%require "Graphics.rkt")
+
+
+(load "Hulp-procedures.rkt")
+(load "positie-adt.rkt")
+(load "Doolhof-adt.rkt")
+(load "Constanten.rkt")
+(load "vuurmier-adt.rkt")
+(load "schorpioen-adt.rkt")
+(load "op-te-rapen-objecten-adt.rkt")
+(load "level-adt.rkt")
+(load "draw-adt.rkt")
+(load "spel-adt.rkt")
+
+
+
+(define spel (maak-adt-spel))
+((spel 'start))
+
+;hiervoor heb ik me geïnspireerd van de wpo massaprogrammeren, het leek me beter om een appart adt te hebben die het spel start
